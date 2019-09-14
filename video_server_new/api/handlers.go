@@ -1,17 +1,17 @@
 package main 
 
 import (
-	"io"
 	"encoding/json"
-	"net/http"
-	"io/ioutil"
+	"github.com/jackistom/video_server/video_server_new/api/dbops"
+	"github.com/jackistom/video_server/video_server_new/api/defs"
+	"github.com/jackistom/video_server/video_server_new/api/session"
 	"github.com/julienschmidt/httprouter"
-	"github.com/avenssi/video_server/api/defs"
-	"github.com/avenssi/video_server/api/dbops"
-	"github.com/avenssi/video_server/api/session"
+	"io"
+	"io/ioutil"
+	"net/http"
 )
 
-func CreateUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func CreateUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {//创建user
 	res, _ := ioutil.ReadAll(r.Body)
 	ubody := &defs.UserCredential{}
 

@@ -1,10 +1,9 @@
 package main 
 
 import (
+	"github.com/jackistom/video_server/video_server_new/api/defs"
+	"github.com/jackistom/video_server/video_server_new/api/session"
 	"net/http"
-	"github.com/avenssi/video_server/api/session"
-	"github.com/avenssi/video_server/api/defs"
-
 )
 
 var HEADER_FIELD_SESSION = "X-Session-Id"

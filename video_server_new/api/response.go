@@ -1,10 +1,11 @@
-package main 
+package main
 
+//响应
 import (
-	"io"
 	"encoding/json"
+	"github.com/jackistom/video_server/video_server_new/api/defs"
+	"io"
 	"net/http"
-	"github.com/avenssi/video_server/api/defs"
 )
 
 func sendErrorResponse(w http.ResponseWriter, errResp defs.ErrResponse) {

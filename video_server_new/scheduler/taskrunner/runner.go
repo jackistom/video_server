@@ -1,27 +1,26 @@
 package taskrunner
 
-import (
-)
+import ()
 
 type Runner struct {
 	Controller controlChan
-	Error controlChan
-	Data dataChan
-	dataSize int
-	longLived bool
-	Dispatcher fn 
-	Executor fn
+	Error      controlChan
+	Data       dataChan
+	dataSize   int
+	longLived  bool
+	Dispatcher fn
+	Executor   fn
 }
 
 func NewRunner(size int, longlived bool, d fn, e fn) *Runner {
-	return &Runner {
+	return &Runner{
 		Controller: make(chan string, 1),
-		Error: make(chan string, 1),
-		Data: make(chan interface{}, size),
-		longLived: longlived,
-		dataSize: size,
+		Error:      make(chan string, 1),
+		Data:       make(chan interface{}, size),
+		longLived:  longlived,
+		dataSize:   size,
 		Dispatcher: d,
-		Executor: e,
+		Executor:   e,
 	}
 }
 
@@ -33,10 +32,10 @@ func (r *Runner) startDispatch() {
 			close(r.Error)
 		}
 	}()
-
+	//交互式 通过channel传递dispatcher和execute是否ready的消息 通过if判断ready_to_dispatcher和ready_to_execute
 	for {
 		select {
-		case c :=<- r.Controller:
+		case c := <-r.Controller:
 			if c == READY_TO_DISPATCH {
 				err := r.Dispatcher(r.Data)
 				if err != nil {
@@ -54,7 +53,7 @@ func (r *Runner) startDispatch() {
 					r.Controller <- READY_TO_DISPATCH
 				}
 			}
-		case e :=<- r.Error:
+		case e := <-r.Error:
 			if e == CLOSE {
 				return
 			}

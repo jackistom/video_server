@@ -1,14 +1,13 @@
 package dbops
 
 import (
-	"time"
-	"log"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/avenssi/video_server/api/defs"
-	"github.com/avenssi/video_server/api/utils"
+	"github.com/jackistom/video_server/video_server_new/api/defs"
+	"github.com/jackistom/video_server/video_server_new/api/utils"
+	"log"
+	"time"
 )
-
 
 func AddUserCredential(loginName string, pwd string) error {
 	stmtIns, err := dbConn.Prepare("INSERT INTO users (login_name, pwd) VALUES (?, ?)")
@@ -85,7 +84,6 @@ func AddNewVideo(aid int, name string) (*defs.VideoInfo, error) {
 	return res, nil
 }
 
-
 func GetVideoInfo(vid string) (*defs.VideoInfo, error) {
 	stmtOut, err := dbConn.Prepare("SELECT author_id, name, display_ctime FROM video_info WHERE id=?")
 
@@ -94,7 +92,7 @@ func GetVideoInfo(vid string) (*defs.VideoInfo, error) {
 	var name string
 
 	err = stmtOut.QueryRow(vid).Scan(&aid, &name, &dct)
-	if err != nil && err != sql.ErrNoRows{
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
@@ -169,9 +167,3 @@ func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
 
 	return res, nil
 }
-
-
-
-
-
-
